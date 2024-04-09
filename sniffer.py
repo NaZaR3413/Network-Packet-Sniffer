@@ -5,10 +5,10 @@ def packet_callback(packet):
 
 def main():
     # Display list of available network interfaces
-    show_interfaces()
+    #show_interfaces()
 
     #interface to search through 
-    iface_name = "Wi-Fi"  
+    iface_name = "Intel(R) Wireless-AC 9462"  
 
     # Start sniffing on the specified interface
     sniff(iface=iface_name, prn=packet_callback, count=10)
