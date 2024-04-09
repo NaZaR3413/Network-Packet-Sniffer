@@ -5,7 +5,7 @@ def packet_callback(packet):
 
 def main():
     # Display list of available network interfaces
-    show_interfaces()
+    #show_interfaces()
 
     #interface to search through 
     iface_name = "Intel(R) Wireless-AC 9462"  
