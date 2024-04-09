@@ -1,7 +1,24 @@
-from scapy.all import sniff, show_interfaces
+from scapy.all import sniff, show_interfaces, IP
+from dns import reverse_dns
 
 def packet_callback(packet):
-    print(packet.summary())
+    if packet.haslayer(IP):
+        # grab ip address of source and destination
+        src_ip = packet[IP].src
+        dest_ip = packet[IP].dst
+        
+        # Ignore mDNS traffic
+        if packet[IP].dst == "224.0.0.251" or packet[IP].dst == "ff02::fb":
+            return
+    
+        
+        # attampt to grab source/destination names
+        src_name = reverse_dns(src_ip)
+        dst_name = reverse_dns(dest_ip)
+        
+        print("\npacket summary: " + packet.summary())
+        print(f"Packet: {src_ip} ({src_name}) -> {dest_ip} ({dst_name})")
+        
 
 def main():
     # Display list of available network interfaces
@@ -11,7 +28,8 @@ def main():
     iface_name = "Intel(R) Wireless-AC 9462"  
 
     # Start sniffing on the specified interface
-    sniff(iface=iface_name, prn=packet_callback, count=10)
+    for i in range(20):
+        sniff(iface=iface_name, prn=packet_callback, count=1)
 
 if __name__ == "__main__":
     main()
