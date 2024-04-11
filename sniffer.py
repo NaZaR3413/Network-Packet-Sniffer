@@ -1,5 +1,6 @@
 from scapy.all import sniff, show_interfaces, IP, TCP, Raw
 from dns import reverse_dns
+from whois_info import whois_print
 import whois
 import time 
 
@@ -20,26 +21,6 @@ def packet_callback(packet):
                 print(f"Domain requested: {domain}")
 
 '''
-#handle all whois printing
-def whois_print(src):
-    # do not try to combine any prints. Errors resonating on the whois side
-    print("Domain_name:")
-    print(src.domain_name)
-    
-    print("\nRegistrar:")
-    print(src.registrar)
-    
-    print("\nwhois_server")
-    print(src.whois_server)
-
-    print("\nemails:")
-    print(src.emails)
-    
-    print("\ncity:")
-    print(src.city)
-    
-    print("\nstate:")
-    print(src.state)
     
 def packet_callback(packet):
     if packet.haslayer(IP):
