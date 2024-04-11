@@ -2,7 +2,6 @@ from scapy.all import sniff, show_interfaces, IP, TCP, Raw
 from dns import reverse_dns
 from whois_info import whois_print
 import whois
-import time 
 
 '''
 def packet_callback(packet):
@@ -23,7 +22,7 @@ def packet_callback(packet):
 '''
     
 def packet_callback(packet):
-    if packet.haslayer(IP):
+    if packet.haslayer(IP) and packet.haslayer(TCP):
         # grab ip address of source and destination
         src_ip = packet[IP].src
         dst_ip = packet[IP].dst
